@@ -1,14 +1,28 @@
-import express, { Request, Response , Application } from 'express';
+import express, { Application } from 'express';
 import dotenv from 'dotenv';
+import cron from 'node-cron';
+import { Op } from 'sequelize';
 import db from './models';
+import Report from './models/report.model'
+import mainRouter from './routes'
+import reportQueue from './utils/queue';
 
 dotenv.config();
 
 const app: Application = express();
 const port = process.env.PORT || 8000;
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Welcome to Express & TypeScript Server');
+app.use(express.json());
+
+app.use('/api', mainRouter);
+
+cron.schedule('* * * * *', async () => {
+  const reports = await Report.findAll({ where: { scheduledAt: { [Op.ne]: null }, status: 'Pending' } });
+  for (const report of reports) {
+    if (new Date(report.time) <= new Date()) {
+      await reportQueue.add('generateReport', { reportId: report.report_id });
+    }
+  }
 });
 
 db.authenticate()
