@@ -1,0 +1,25 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "report-scheduler",
+    "host": "localhost",
+    "dialect": "postgres",
+    "seederStorage": "sequelize"
+  },
+  "staging": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "report-scheduler",
+    "host": "localhost",
+    "dialect": "postgres",
+    "seederStorage": "sequelize"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "report-scheduler",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}
