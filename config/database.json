@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "postgres",
-    "database": "report_schedular",
+    "database": "postgres",
     "host": "localhost",
     "dialect": "postgres",
     "seederStorage": "sequelize"

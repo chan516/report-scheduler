@@ -9,7 +9,7 @@ export enum ReportStatus {
 
 export interface ReportAttributes {
   report_id: string;
-  date: Date;
+  time: Date;
   status: ReportStatus;
 }
 
@@ -24,8 +24,11 @@ export default class Report extends Model implements ReportAttributes {
   report_id: string;
 
   @Column(DataType.DATE)
-  date: Date;
+  time: Date;
 
-  @Column(DataType.ENUM('InActive', 'Active', 'Pending', 'Achieved'))
+  @Column({
+    type: DataType.ENUM(...Object.values(ReportStatus)),
+    allowNull: false,
+  })
   status: ReportStatus;
 }
