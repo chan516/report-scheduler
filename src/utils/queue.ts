@@ -7,7 +7,6 @@ const redisConnection = new Redis(
 );
 
 const createBullQueue = (queueName: string): Bull.Queue => {
-  // Create a Bull queue instance with Redis configuration
   const queue = new Bull(queueName, {
     redis: {
       host: redisConnection.options.host,

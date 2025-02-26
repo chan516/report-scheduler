@@ -6,9 +6,9 @@ import Report from './report.model';
 config();
 
 const db = new Sequelize({
-  database: process.env.POSTGRESQL_DATABASE,
-  username: process.env.POSTGRESQL_USER,
-  password: process.env.POSTGRESQL_PASSWORD,
+  database: process.env.POSTGRESQL_DATABASE || 'postgres',
+  username: process.env.POSTGRESQL_USER || 'postgres',
+  password: process.env.POSTGRESQL_PASSWORD || 'postgres',
   host: process.env.POSTGRESQL_HOST || 'localhost',
   dialect: 'postgres',
   port: parseInt(process.env.POSTGRESQL_PORT || '', 10) || 5432,
