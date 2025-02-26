@@ -20,6 +20,9 @@ This is a service that processes user-generated reports.
 2. start Redis server
 > run redis-server.exe
 
+3. setup database
+> `npm run db:setup`
+
 3. run web server
 > `npm run dev` on local environment.
 Server will run on http://localhost:3001
