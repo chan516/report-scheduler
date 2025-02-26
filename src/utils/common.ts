@@ -1,3 +1,7 @@
-export const getTime = (date: Date) => {
-  return date.toISOString().split('T')[1].split('.')[0];
+export const checkScheduledTime = (date: Date) => {
+  const currentDate = new Date();
+  const scheduledDate = new Date(date)
+  if (scheduledDate.getHours() === currentDate.getHours() && scheduledDate.getMinutes() === currentDate.getMinutes())
+    return true;
+  return false;
 }

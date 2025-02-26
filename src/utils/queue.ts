@@ -38,16 +38,16 @@ const queue = createBullQueue('voiceCloneQueue');
 queue.process(async (job) => {
   const { report_id, time } = job.data;
   try {
-    const voice = await Report.findByPk(report_id);
+    const report = await Report.findByPk(report_id);
 
-    if (!voice)
+    if (!report)
       throw new Error(`Report with ID ${report_id} does not exist.`);
 
     console.info(`Processing report ${report_id} started.`);
 
     console.info('[Report]', report_id, time);
   } catch (error) {
-    console.error(`Error processing voice ${report_id}:`, error);
+    console.error(`Error processing report ${report_id}:`, error);
   }
 });
 

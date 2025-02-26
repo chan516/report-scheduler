@@ -6,7 +6,6 @@ import addToQueue from "../utils/queue";
 const createReport = async (req: Request, res: Response) => {
   try {
     const { schedule } = req.body;
-    console.log(schedule)
     const report = await Report.create({ time: schedule, status: "Active" });
     if (!schedule) {
       await addToQueue({ report_id: report.report_id, time: report.time });
@@ -24,7 +23,7 @@ const getReport = async (req: Request, res: Response) => {
     const report = await Report.findOne({
       where: { report_id }
     });
-    if (!report) res.status(404).json({ error: "Report not found" });
+    if (!report) res.status(404).json({ error: "Report is not found" });
     res.status(200).json(report);
   } catch (error) {
     console.error(error);
@@ -40,7 +39,7 @@ const deleteReport = async (req: Request, res: Response) => {
     });
     if (!report || report.status !== "Pending") res.status(404).json({ error: "Cannot cancel" });
     if (report) await report.destroy();
-    res.status(204).json({ message: "Report cancelled" });
+    res.status(204).json({ message: "Report is cancelled" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });    
