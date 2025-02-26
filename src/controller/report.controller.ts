@@ -1,8 +1,14 @@
 import { Request, Response } from "express";
+import { validationResult } from "express-validator";
 import Report from "../models/report.model";
 
 const createReport = async (req: Request, res: Response) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ error: "Internal Server Error" })
+      return
+    };
     const { time } = req.body;
     const report = await Report.create({ time, status: "Active" });
     res.status(201).json(report);

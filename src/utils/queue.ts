@@ -45,6 +45,10 @@ queue.process(async (job) => {
 
     console.info(`Processing report ${report_id} started.`);
 
+    // add other action to send data to frontend
+
+    await Report.update({ status: 'Achieved' },{ where: { report_id }});
+
     console.info('[Report]', report_id, time);
   } catch (error) {
     console.error(`Error processing report ${report_id}:`, error);
