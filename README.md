@@ -18,7 +18,12 @@ This is a service that processes user-generated reports.
  > `npm install`
 
 2. start Redis server
-> run redis-server.exe
+
+#### Windows
+ run redis-server.exe
+
+#### Ubuntu or Mac OS
+> sudo service redis-server start
 
 3. setup database
 > `npm run db:setup`
