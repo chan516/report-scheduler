@@ -13,13 +13,13 @@ app.use(express.json());
 
 app.use('/api', mainRouter);
 
-app.use(reportJob)
-
 db.authenticate()
   .then(async () => {
     console.log(
       'Connection to the database has been established successfully.'
     );
+    await reportJob()
+    console.log('Report job created successfully');
     app.listen(port, () => {
       console.log(`Server is Fire at http://localhost:${port}`);
     });

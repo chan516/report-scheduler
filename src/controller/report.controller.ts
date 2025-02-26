@@ -6,9 +6,10 @@ import addToQueue from "../utils/queue";
 const createReport = async (req: Request, res: Response) => {
   try {
     const { schedule } = req.body;
+    console.log(schedule)
     const report = await Report.create({ time: schedule, status: "Active" });
     if (!schedule) {
-      await addToQueue({ report_id: report.report_id, time: schedule });
+      await addToQueue({ report_id: report.report_id, time: report.time });
     }
     res.status(201).json(report);
   } catch (error) {
