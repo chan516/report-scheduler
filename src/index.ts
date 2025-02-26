@@ -7,7 +7,7 @@ import reportJob from './jobs';
 dotenv.config();
 
 const app: Application = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 3001;
 
 app.use(express.json());
 
