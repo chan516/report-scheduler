@@ -1,11 +1,8 @@
 import express, { Application } from 'express';
 import dotenv from 'dotenv';
-import cron from 'node-cron';
-import { Op } from 'sequelize';
 import db from './models';
-import Report from './models/report.model'
 import mainRouter from './routes'
-import reportQueue from './utils/queue';
+import reportJob from './jobs';
 
 dotenv.config();
 
@@ -16,14 +13,7 @@ app.use(express.json());
 
 app.use('/api', mainRouter);
 
-cron.schedule('* * * * *', async () => {
-  const reports = await Report.findAll({ where: { scheduledAt: { [Op.ne]: null }, status: 'Pending' } });
-  for (const report of reports) {
-    if (new Date(report.time) <= new Date()) {
-      await reportQueue.add('generateReport', { reportId: report.report_id });
-    }
-  }
-});
+app.use(reportJob)
 
 db.authenticate()
   .then(async () => {

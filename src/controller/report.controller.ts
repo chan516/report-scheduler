@@ -1,13 +1,14 @@
 import { Request, Response } from "express";
 import Report from "../models/report.model";
-import reportQueue from "../utils/queue";
+import addToQueue from "../utils/queue";
+
 
 const createReport = async (req: Request, res: Response) => {
   try {
     const { schedule } = req.body;
     const report = await Report.create({ time: schedule, status: "Active" });
     if (!schedule) {
-      await reportQueue.add("generateReport", { reportId: report.report_id });
+      await addToQueue({ report_id: report.report_id, time: schedule });
     }
     res.status(201).json(report);
   } catch (error) {
