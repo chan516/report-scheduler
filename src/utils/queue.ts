@@ -33,7 +33,7 @@ const createBullQueue = (queueName: string): Bull.Queue => {
   return queue;
 };
 
-const queue = createBullQueue('voiceCloneQueue');
+const queue = createBullQueue('reportQueue');
 
 queue.process(async (job) => {
   const { report_id, time } = job.data;
