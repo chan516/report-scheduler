@@ -1,7 +1,5 @@
-export const checkScheduledTime = (date: Date) => {
-  const currentDate = new Date();
-  const scheduledDate = new Date(date)
-  if (scheduledDate.getHours() === currentDate.getHours() && scheduledDate.getMinutes() === currentDate.getMinutes())
-    return true;
-  return false;
+export const getScheduleDate = (date: Date) => {
+  const hour = new Date(date).getHours()
+  const minutes = new Date(date).getMinutes()
+  return `${minutes} ${hour} * * *`
 }
