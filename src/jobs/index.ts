@@ -17,6 +17,8 @@ const reportJob = async () => {
         console.log("Report job is scheduled successfully", report_id);
       });
     });
+  } else {
+    console.log("No active reports to schedule.")
   }
 };
 
