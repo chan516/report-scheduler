@@ -2,7 +2,7 @@ import schedule from "node-schedule";
 import { Op } from "sequelize";
 import Report from "../models/report.model";
 import addToQueue from "../utils/queue";
-import { checkScheduledTime } from "../utils/common";
+import { getScheduleDate } from "../utils/common";
 
 const reportJob = async () => {
   const reports = await Report.findAll({
@@ -10,13 +10,12 @@ const reportJob = async () => {
   });
   if (reports) {
     reports.map(({ report_id, time }) => {
-      if (checkScheduledTime(time)) {
-        return schedule.scheduleJob("* * * * *", async () => {
+      const scheduleDate = getScheduleDate(time)
+      return schedule.scheduleJob(scheduleDate, async () => {
           await addToQueue({ report_id, time });
           await Report.update({ status: "Pending" }, { where: { report_id } });
           console.log("Report job is scheduled successfully", report_id);
-        });
-      }
+      });
     });
   }
 };
