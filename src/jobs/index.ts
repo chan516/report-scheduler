@@ -12,9 +12,9 @@ const reportJob = async () => {
     reports.map(({ report_id, time }) => {
       const scheduleDate = getScheduleDate(time)
       return schedule.scheduleJob(scheduleDate, async () => {
-          await addToQueue({ report_id, time });
-          await Report.update({ status: "Pending" }, { where: { report_id } });
-          console.log("Report job is scheduled successfully", report_id);
+        await addToQueue({ report_id, time });
+        await Report.update({ status: "Pending" }, { where: { report_id } });
+        console.log("Report job is scheduled successfully", report_id);
       });
     });
   }

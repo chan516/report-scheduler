@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import Report from "../models/report.model";
+import addToQueue from "../utils/queue";
 
 const createReport = async (req: Request, res: Response) => {
   try {
@@ -10,7 +11,8 @@ const createReport = async (req: Request, res: Response) => {
       return
     };
     const { time } = req.body;
-    const report = await Report.create({ time, status: "Active" });
+    const report = await Report.create({ time, status: "Active" }) as Report
+    await addToQueue({ report_id: report.report_id, time: report.time });
     res.status(201).json(report);
   } catch (error) {
     console.error(error);
