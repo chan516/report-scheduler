@@ -38,7 +38,7 @@ const deleteReport = async (req: Request, res: Response) => {
     const report = await Report.findOne({
       where: { report_id }
     });
-    if (!report || report.status !== "Pending") res.status(404).json({ error: "Cannot cancel" });
+    if (!report || report.status == "Pending") res.status(404).json({ error: "Cannot cancel" });
     if (report) await report.destroy();
     res.status(204).json({ message: "Report is cancelled" });
   } catch (error) {
